@@ -7,8 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix --ignore-path .gitignore",
-    "tauri-build": "tauri build",
-    "tauri-dev": "tauri dev"
+    "tauri": "tauri"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.1",
