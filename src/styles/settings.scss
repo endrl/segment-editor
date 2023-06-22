@@ -1,0 +1,51 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+.top-left {
+    top: 0px;
+    left: 0px;
+}
+
+.opacity-10 {
+    opacity: 10%;
+}
+
+.opacity-20 {
+    opacity: 20%;
+}
+
+.opacity-30 {
+    opacity: 30%;
+}
+
+.opacity-40 {
+    opacity: 40%;
+}
+
+.opacity-50 {
+    opacity: 50%;
+}
+
+.opacity-60 {
+    opacity: 0%;
+}
+
+.opacity-70 {
+    opacity: 70%;
+}
+
+.opacity-80 {
+    opacity: 80%;
+}
+
+.opacity-90 {
+    opacity: 90%;
+}

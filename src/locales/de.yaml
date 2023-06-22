@@ -1,0 +1,49 @@
+login:
+  api_key: Jellyfin API Key
+  server_address: Jellyfin Server Adresse
+  test_conn: Verbindung testen
+  validation:
+    api_key_invalid: Ungültiger API Key
+    url_invalid: URL Fehler. Sollte mit http:// oder https:// beginnen
+  connect_fail: Verbindung fehlgeschlagen!
+  auth_fail: Authentifizierung fehlgeschlagen!
+app:
+  theme:
+    title: Stil
+    system: System
+    dark: Dunkel
+    light: Hell
+  locale:
+    auto: Auto
+    en: Englisch
+    de: Deutsch
+    title: Sprache
+  title: Segment Editor
+  showVideoPlayer: Videoplayer anzeigen
+items:
+  select_collection: Sammlung
+  filter:
+    name: Suchen
+    collection: Sammlung
+editor:
+  saveSegment: Speichern
+  deleteSure: Möchtest du dieses '{Type}' Segment wirklich löschen?
+  deleteSureTitle: Segment entfernen | Segmente entfernen | {count} Segmente entfernen
+  time: Zeit
+  lastEditor: Zuletzt bearbeitet von
+  deleteSegments: Möchtest du wirklich alle Segmente für '{item}' entfernen?
+  newSegment: Neues Segment
+  slider:
+    title: Slider Editor
+'yes': Ja
+'no': Nein
+segment:
+  start: Start
+  end: Ende
+  type: Segment Typ
+  recaction: Empfohlene Aktion
+  edit: Segment bearbeiten
+  duration: Dauer
+validation:
+  StartEnd: Start liegt immer vor dem Ende
+close: Schließen
