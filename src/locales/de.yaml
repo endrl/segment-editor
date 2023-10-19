@@ -15,7 +15,7 @@ app:
     light: Hell
   locale:
     auto: Auto
-    en: Englisch
+    en-US: Englisch
     de: Deutsch
     title: Sprache
   title: Segment Editor
@@ -35,6 +35,7 @@ editor:
   newSegment: Neues Segment
   slider:
     title: Slider Editor
+  noSegments: Keine Segmente gefunden, erstelle eines mit '+'
 'yes': Ja
 'no': Nein
 segment:
@@ -47,3 +48,4 @@ segment:
 validation:
   StartEnd: Start liegt immer vor dem Ende
 close: Schließen
+back: Zurück

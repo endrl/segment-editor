@@ -1,5 +1,5 @@
-import { ImageType, ItemDto, MediaSegment } from "@/interfaces";
-import { useApi } from '@/composables/api'
+import { ImageType, ItemDto, MediaSegment } from 'src/interfaces';
+import { useApi } from 'src/composables/api'
 
 export function useUtils() {
   const { getImage } = useApi()
@@ -92,16 +92,16 @@ export function useUtils() {
     return URL.createObjectURL(blob)
   }
 
-  function getColorByType(type: MediaSegment["Type"]) {
+  function getColorByType(type: MediaSegment['Type']) {
     switch (type) {
       case 'Intro':
-        return '#5dd755'
+        return 'green-5'
       case 'Outro':
-        return '#a88be3'
+        return 'purple-4'
       case 'Preview':
-        return 'blue'
+        return 'light-green'
       case 'Recap':
-        return 'blue'
+        return 'lime'
       case 'Commercial':
         return 'red'
       default:
@@ -239,7 +239,7 @@ export function useUtils() {
     const min = splitted.pop()?.trim()
     const h = splitted.pop()?.trim()
 
-    let totalSecs: number = 0
+    let totalSecs = 0
 
     if (sec != undefined)
       totalSecs += Number.parseFloat(sec)

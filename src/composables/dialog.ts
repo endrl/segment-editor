@@ -1,5 +1,5 @@
-import useModalStore from "@/store/modal";
-import YesNoModal from "@/components/dialog/YesNoModal.vue";
+import useModalStore from "stores/modal";
+import YesNoModal from "src/components/dialog/YesNoModal.vue";
 import { useI18n } from "vue-i18n";
 
 export function useDialog() {

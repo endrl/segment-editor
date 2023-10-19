@@ -1,7 +1,7 @@
-import { useApiStore } from "@/store/api"
+import { useApiStore } from 'stores/api'
 
 import * as fetch from './fetch'
-import { ImageType, VirtualFolderDto } from "@/interfaces";
+import { ImageType, VirtualFolderDto } from 'src/interfaces';
 
 export function useApi() {
   const { fetchWithAuthJson, fetchWithAuth } = useApiStore()
@@ -29,10 +29,17 @@ export function useApi() {
   */
 
   // Get items for collection
-  async function getItems(collectionId: string) {
+  async function getItems(collectionId: string, index?: number) {
     const query: Map<string, any> = new Map();
     query.set('parentId', collectionId);
-    query.set('fields','MediaStreams')
+    query.set('fields', 'MediaStreams')
+    if (index != undefined) {
+      // TODO all broken?!?!
+      //query.set('startIndex', index)
+      //query.set('parentIndexNumber', index)
+      //query.set('searchTerm', 'Ava')
+      //query.set('limit', '5')
+    }
 
     const items = await fetchWithAuthJson('Items', query)
     return items;
@@ -45,7 +52,7 @@ export function useApi() {
   }
 
   // Get Image for item
-  async function getImage(itemId: string, width: number = 133, height: number = 200, type: ImageType = ImageType.Primary) {
+  async function getImage(itemId: string, width = 133, height = 200, type: ImageType = ImageType.Primary) {
     const query: Map<string, any> = new Map();
 
     query.set('tag', `segmenteditor_${itemId}_${type}`);

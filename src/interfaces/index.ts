@@ -15,20 +15,22 @@ export enum MediaSegmentAction {
 }
 
 export class MediaSegment {
-  Start: number = 0;
-  End: number = 1;
+  Start = 0;
+  End = 1;
   Type: MediaSegmentType = MediaSegmentType.INTRO;
-  TypeIndex: number = 0;
-  ItemId: string = 'notlegit';
-  CreatorId: string = 'notlegit';
+  TypeIndex = 0;
+  ItemId = 'notlegit';
+  CreatorId = 'notlegit';
   Action: MediaSegmentAction = MediaSegmentAction.AUTO;
 }
 
 export enum ItemType {
-  Movies = 'Movie',
+  Movie = 'Movie',
   Series = 'Series',
   Season = 'Season',
-  Episode = 'Episode'
+  Episode = 'Episode',
+  MusicArtist = 'MusicArtist',
+  MusicAlbum = 'MusicAlbum',
 }
 
 export interface UserData {
@@ -90,7 +92,6 @@ export interface ImageBlurHashesDto {
   Logo: {
     id: string
   }
-
 }
 
 export interface ItemDto {
@@ -132,6 +133,11 @@ export interface ItemDto {
   SeasonName?: string, // Staffel 1
   VideoType?: string, // VideoFile
   MediaType?: string // Video
+  // MusicAlbum
+  AlbumArtist?: string,
+  AlbumArtists?: object[],
+  ArtistItems?: object[]
+
 }
 
 export interface VirtualFolderDto {
@@ -204,17 +210,17 @@ export interface VirtualFolderDto {
  * @enum {string}
  */
 export enum ImageType {
-  Primary = "Primary",
-  Art = "Art",
-  Backdrop = "Backdrop",
-  Banner = "Banner",
-  Logo = "Logo",
-  Thumb = "Thumb",
-  Disc = "Disc",
-  Box = "Box",
-  Screenshot = "Screenshot",
-  Menu = "Menu",
-  Chapter = "Chapter",
-  BoxRear = "BoxRear",
-  Profile = "Profile",
+  Primary = 'Primary',
+  Art = 'Art',
+  Backdrop = 'Backdrop',
+  Banner = 'Banner',
+  Logo = 'Logo',
+  Thumb = 'Thumb',
+  Disc = 'Disc',
+  Box = 'Box',
+  Screenshot = 'Screenshot',
+  Menu = 'Menu',
+  Chapter = 'Chapter',
+  BoxRear = 'BoxRear',
+  Profile = 'Profile',
 }

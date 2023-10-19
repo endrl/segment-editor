@@ -13,9 +13,8 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 ## Work in progress
 
 * Fix: Movie collections
-* Movies should open in player view
+* [X] Movies should open in player view
 * Manage all media segments by creatorId (new page)
-* Add "pagination" when fetching items
 * Server side search query
 * Add audio support
 * More filter
@@ -30,28 +29,49 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 
 Install node LTS, clone this repo and run
 
-```
-# npm
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-# npm
-npm run dev
+```bash
+npm i && npm i -g @quasar/cli
 ```
 
-### Compiles and minifies for production
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
-```
-# npm
-npm run build
+```bash
+quasar dev
 ```
 
-### Lints and fixes files
+### Lint the files
 
-```
-# npm
+```bash
+yarn lint
+# or
 npm run lint
+```
+
+### Format the files
+
+```bash
+yarn format
+# or
+npm run format
+```
+
+### Build the app for production
+
+```bash
+quasar build
+```
+
+## Tauri App building
+Install [Rust](https://www.rust-lang.org/learn/get-started)
+
+### Tauri dev
+
+```bash
+npm run tauri dev
+```
+
+### Tauri build for production
+
+```bash
+npm run tauri build
 ```

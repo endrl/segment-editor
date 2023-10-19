@@ -1,14 +1,12 @@
 <template>
-  <Suspense>
-    <router-view />
-  </Suspense>
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from './store/app';
-import { useApiStore } from './store/api';
-import { useItemsStore } from './store/items';
-import { useTauri } from './composables/tauri';
+import { useAppStore } from 'stores/app';
+import { useApiStore } from 'stores/api';
+import { useItemsStore } from 'stores/items';
+import { useTauri } from 'src/composables/tauri';
 
 const { setTheme, setLocale } = useAppStore();
 const { testConnection } = useApiStore();
@@ -26,5 +24,6 @@ setLocale();
 hide_splashscreen()
 
 // Test connection async
-testConnection().then((state) => { if (state) getCollectionss() });
+testConnection().then((state) => { if (state) { getCollectionss() } });
 </script>
+

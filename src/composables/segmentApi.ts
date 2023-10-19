@@ -1,5 +1,5 @@
-import { useApiStore } from "@/store/api"
-import { ItemDto, MediaSegment } from "@/interfaces";
+import { useApiStore } from "stores/api"
+import { ItemDto, MediaSegment } from "src/interfaces";
 
 export function useSegmentApi() {
   const { fetchWithAuthJson, postJson, deleteJson } = useApiStore()

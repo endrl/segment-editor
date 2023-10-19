@@ -4,7 +4,7 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
     "devPath": "http://localhost:3111",
-    "distDir": "../dist"
+    "distDir": "../dist/spa"
   },
   "package": {
     "productName": "Jellyfin Segment Editor",
@@ -17,7 +17,7 @@
     "bundle": {
       "active": true,
       "category": "Productivity",
-      "copyright": "",
+      "copyright": "MIT",
       "deb": {
         "depends": []
       },
@@ -48,7 +48,8 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": null,
+      "dangerousUseHttpScheme": true
     },
     "updater": {
       "active": false

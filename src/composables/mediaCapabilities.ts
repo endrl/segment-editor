@@ -1,4 +1,4 @@
-import { BaseMediaStream } from "@/interfaces";
+import { BaseMediaStream } from 'src/interfaces';
 
 export function useMediaCapabilities() {
 
@@ -56,7 +56,7 @@ export function useMediaCapabilities() {
       case 'Multiview Depth High':
         return '8A00'
       default:
-        console.error("Unhandled AVC Profile:", prof)
+        console.error('Unhandled AVC Profile:', prof)
         break;
     }
   }
@@ -138,7 +138,7 @@ export function useMediaCapabilities() {
       case 'High Throughput 4:4:4 16 Intro':
         return ['5.32', 'B0.24']
       default:
-        console.error("Unhandled HEVC Profile:", prof)
+        console.error('Unhandled HEVC Profile:', prof)
         return ['1.6', 'B0']
     }
   }
@@ -160,7 +160,7 @@ export function useMediaCapabilities() {
       case 'professional':
         return '2'
       default:
-        console.error("Unhandled AV1 Profile:", prof)
+        console.error('Unhandled AV1 Profile:', prof)
         break;
     }
   }
@@ -262,7 +262,7 @@ export function useMediaCapabilities() {
     // codec schema cccc.PP.LL.DD[.CC.cp.tc.mc.FF]
     const cccc = stream.Codec === 'vp9' ? 'vp09' : 'vp08'
     // vp9 test file had "Profile 0" as profile string, ffmpeg probe test confirmed the bug
-    const cleanProfile = stream.Profile.includes("Profile") ? stream.Profile.substring(stream.Profile.length - 1) : stream.Profile;
+    const cleanProfile = stream.Profile.includes('Profile') ? stream.Profile.substring(stream.Profile.length - 1) : stream.Profile;
     const PP = cleanProfile.length == 1 ? '0' + cleanProfile : cleanProfile;
     const LL = stream.Level < 10 ? 10 : stream.Level; // vp8,vp9 test file got -99, so set to 10 as fallback
     const DD = stream.BitDepth < 10 ? `0${stream.BitDepth}` : stream.BitDepth;
@@ -282,14 +282,14 @@ export function useMediaCapabilities() {
    */
   const getAudioCodec = (stream: BaseMediaStream) => {
     switch (stream.Codec) {
-      case "aac":
-        return "mp4a.40.2" // .2 -> AAC-LC, .5 -> AAC-HE, .29 -> AAC-HE v2
-      case "mp3":
-        return "mp4a.6B" // 6B -> MPEG-1 Part 3, 69 -> MPEG-2 Part 3
-      case "ac3": // Dolby Digital
-        return "ac-3"
-      case "eac3": // Dolby Digital Plus
-        return "ec-3"
+      case 'aac':
+        return 'mp4a.40.2' // .2 -> AAC-LC, .5 -> AAC-HE, .29 -> AAC-HE v2
+      case 'mp3':
+        return 'mp4a.6B' // 6B -> MPEG-1 Part 3, 69 -> MPEG-2 Part 3
+      case 'ac3': // Dolby Digital
+        return 'ac-3'
+      case 'eac3': // Dolby Digital Plus
+        return 'ec-3'
       default:
         return `${stream.Codec}`
     }
@@ -303,14 +303,14 @@ export function useMediaCapabilities() {
    */
   const getVideoCodec = (stream: BaseMediaStream) => {
     switch (stream.Codec) {
-      case "h264":
+      case 'h264':
         return getCodecH264(stream)
-      case "hevc": // h265
+      case 'hevc': // h265
         return getCodecHevc(stream)
-      case "av1":
+      case 'av1':
         return getCodecAV1(stream)
-      case "vp8":
-      case "vp9":
+      case 'vp8':
+      case 'vp9':
         return getCodecWebM(stream)
       default:
         return stream.Codec
@@ -324,12 +324,12 @@ export function useMediaCapabilities() {
    */
   const getMediaContainer = (stream: BaseMediaStream) => {
     switch (stream.Codec) {
-      case "h264":
-        return ["mp4", "mp2ts"] // or mp2ts
-      case "hevc": // h265
-        return ["mp4"] // mp2ts not supported by hls.js. See https://github.com/video-dev/hls.js/issues/4943#issuecomment-1577457737
-      case "av1":
-        return ["mp4"] //  webm or mp2ts. (mp2ts is not supported by chrome), (vp9 with mp4 partly hangs in chrome for me) https://en.wikipedia.org/wiki/AV1#Supported_container_formats
+      case 'h264':
+        return ['mp4', 'mp2ts'] // or mp2ts
+      case 'hevc': // h265
+        return ['mp4'] // mp2ts not supported by hls.js. See https://github.com/video-dev/hls.js/issues/4943#issuecomment-1577457737
+      case 'av1':
+        return ['mp4'] //  webm or mp2ts. (mp2ts is not supported by chrome), (vp9 with mp4 partly hangs in chrome for me) https://en.wikipedia.org/wiki/AV1#Supported_container_formats
       //     case "vp8":
       //     case "vp9":
       //     case "vorbis":
@@ -352,7 +352,7 @@ export function useMediaCapabilities() {
 
     if (container) {
       return {
-        type: "media-source",
+        type: 'media-source',
         video: {
           contentType: `video/${container[0]};codecs="${videoCodec}"`,
           width: stream.Width,
@@ -375,7 +375,7 @@ export function useMediaCapabilities() {
 
     if (container) {
       return {
-        type: "media-source",
+        type: 'media-source',
         audio: {
           contentType: `audio/${container[0]};codecs="${audioCodec}"`,
           bitrate: stream.BitRate,
@@ -393,9 +393,9 @@ export function useMediaCapabilities() {
    */
   const testMediaStream = async (stream: BaseMediaStream) => {
     let config;
-    if (stream.Type === "Video") {
+    if (stream.Type === 'Video') {
       config = getVideoConfiguration(stream)
-    } else if (stream.Type === "Audio") {
+    } else if (stream.Type === 'Audio') {
       config = getAudioConfiguration(stream)
     }
 
@@ -420,7 +420,7 @@ export function useMediaCapabilities() {
 
     if (container) {
       config = {
-        type: "media-source",
+        type: 'media-source',
         video: { // avc1.XXXXX dot notation of video part breaks parsing
           contentType: `video/${container[0]};codecs="${videoCodec},mp4a.40.2"`, //
           width: video.Width,
@@ -445,10 +445,10 @@ export function useMediaCapabilities() {
    */
   const toJellyfinContainer = (cont?: string) => {
     switch (cont) {
-      case "mp4":
-        return "mp4"
-      case "mp2ts":
-        return "ts"
+      case 'mp4':
+        return 'mp4'
+      case 'mp2ts':
+        return 'ts'
       default:
         return undefined
     }
