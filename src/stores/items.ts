@@ -77,7 +77,13 @@ export const useItemsStore = defineStore('items', () => {
   // Get and reset items whenever connection is io or collection changed
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   watch([selectedCol, validConnection, validAuth], ([newcol, connection, auth]) => {
-    if (connection && auth) { getNewItems() }
+    if (connection && auth) {
+      // on intial startup collections are empty. This is already in App.vue
+      if (selectedCol.value == undefined)
+        getCollectionss();
+
+      getNewItems()
+    }
   })
 
   return { localItems, collections, selectedCol, filteredItems, filterName, getCollectionss, getMoreItems, pushMoreItems }
