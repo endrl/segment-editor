@@ -14,7 +14,6 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 
 * Fix: Movie collections
 * [X] Movies should open in player view
-* Manage all media segments by creatorId (new page)
 * Server side search query
 * Add audio support
 * More filter

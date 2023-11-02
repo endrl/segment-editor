@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { CREATOR_UUID } from 'src/composables/constants';
 import { useUtils } from 'src/composables/utils';
 import { ItemDto, MediaSegment, MediaSegmentAction, MediaSegmentType } from 'src/interfaces';
 import { useSegmentsStore } from 'stores/segments';
@@ -92,7 +91,7 @@ const updatePlayerTimestamp = (newtimestamp: number) => {
 
 const createSegmentFromPlayer = (obj: { type: MediaSegmentType; start: number; }) => {
   const seg: MediaSegment = {
-    Type: obj.type, TypeIndex: 0, Start: obj.start, End: obj.start + 1, ItemId: item.Id, CreatorId: CREATOR_UUID, Action: MediaSegmentAction.AUTO
+    Type: obj.type, TypeIndex: 0, Start: obj.start, End: obj.start + 1, ItemId: item.Id, Action: MediaSegmentAction.AUTO
   }
 
   const found = editingSegments.find((seg: MediaSegment) => seg.ItemId == item.Id && seg.Type == obj.type && seg.TypeIndex == 0)

@@ -30,7 +30,6 @@ editor:
   deleteSure: Are you sure to delete segment '{Type}'?
   deleteSureTitle: Delete Segment | Delete Segments | Delete {count} Segments
   time: Time
-  lastEditor: Last Modified by
   deleteSegments: Are you sure to delete all segments for '{item}'?
   newSegment: New Segment
   slider:

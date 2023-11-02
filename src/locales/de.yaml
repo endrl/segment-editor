@@ -30,7 +30,6 @@ editor:
   deleteSure: Möchtest du dieses '{Type}' Segment wirklich löschen?
   deleteSureTitle: Segment entfernen | Segmente entfernen | {count} Segmente entfernen
   time: Zeit
-  lastEditor: Zuletzt bearbeitet von
   deleteSegments: Möchtest du wirklich alle Segmente für '{item}' entfernen?
   newSegment: Neues Segment
   slider:

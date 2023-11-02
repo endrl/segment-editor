@@ -1,5 +1,5 @@
-import { useApiStore } from "stores/api"
-import { ItemDto, MediaSegment } from "src/interfaces";
+import { useApiStore } from 'stores/api'
+import { ItemDto, MediaSegment } from 'src/interfaces';
 
 export function useSegmentApi() {
   const { fetchWithAuthJson, postJson, deleteJson } = useApiStore()
@@ -13,7 +13,7 @@ export function useSegmentApi() {
   }
 
   // Get segments
-  async function getSegmentsById(itemId: ItemDto["Id"]) {
+  async function getSegmentsById(itemId: ItemDto['Id']) {
     const query: Map<string, any> = new Map();
     query.set('itemId', itemId)
 
@@ -37,7 +37,6 @@ export function useSegmentApi() {
   async function deleteSegment(segment: MediaSegment) {
     const query: Map<string, any> = new Map();
     query.set('itemId', segment.ItemId)
-    query.set('creatorId', segment.CreatorId)
     query.set('type', segment.Type)
     query.set('typeIndex', segment.TypeIndex)
 
@@ -55,15 +54,5 @@ export function useSegmentApi() {
     deleteJson('MediaSegment', undefined, query)
   }
 
-  /**
-  * Delte all media segments for creatorId on server
-  * @param segment segment
-  */
-  async function deleteSegmentsWithCreator(creatorId: MediaSegment['CreatorId']) {
-    const query: Map<string, any> = new Map();
-    query.set('creatorId', creatorId)
-
-    deleteJson('MediaSegment', undefined, query)
-  }
-  return { getSegments, getSegmentsById, updateSegment, deleteSegment, deleteSegmentsWithId, deleteSegmentsWithCreator }
+  return { getSegments, getSegmentsById, updateSegment, deleteSegment, deleteSegmentsWithId }
 }

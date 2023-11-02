@@ -66,7 +66,6 @@
 
 <script setup lang="ts">
 import { ItemDto, MediaSegment, MediaSegmentAction, MediaSegmentType } from 'src/interfaces';
-import { CREATOR_UUID } from 'src/composables/constants'
 import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUtils } from 'src/composables/utils'
@@ -90,9 +89,8 @@ const saveSegment = async () => {
   if (rule() !== true) return
 
   showDialog.value = false
-  // inject itemId and creatorId
+  // inject itemId
   localSegment.ItemId = props.itemId
-  localSegment.CreatorId = CREATOR_UUID
   emit('saveSegment', JSON.parse(JSON.stringify(localSegment)));
 }
 </script>

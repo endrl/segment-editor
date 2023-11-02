@@ -20,7 +20,6 @@ export class MediaSegment {
   Type: MediaSegmentType = MediaSegmentType.INTRO;
   TypeIndex = 0;
   ItemId = 'notlegit';
-  CreatorId = 'notlegit';
   Action: MediaSegmentAction = MediaSegmentAction.AUTO;
 }
 

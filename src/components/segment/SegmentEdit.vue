@@ -29,9 +29,6 @@
                 localSegment.Start))
               }}
             </div>
-            <br />
-            <div>{{ $t('editor.lastEditor') }}:</div>
-            <div>{{ getNameForCreatorId(localSegment.CreatorId) }}</div>
           </div>
         </div>
       </q-card-section>
@@ -66,7 +63,6 @@
 <script setup lang="ts">
 import { ItemDto, MediaSegment, MediaSegmentAction } from 'src/interfaces';
 import { reactive, watch } from 'vue';
-import { CREATOR_UUID, getNameForCreatorId } from 'src/composables/constants'
 import { useI18n } from 'vue-i18n';
 import { useDialog } from 'src/composables/dialog';
 import { useUtils } from 'src/composables/utils'
@@ -95,8 +91,6 @@ watch(() => props.segment, (newValue: Props['segment']) => {
 
 const saveSegment = () => {
   if (rule() !== true) return
-  // inject our creatorId, we take over ownership of the segment
-  localSegment.CreatorId = CREATOR_UUID;
   emit('saveSegment', JSON.parse(JSON.stringify(localSegment)));
 }
 const deleteSegment = () => {
