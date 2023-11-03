@@ -9,6 +9,8 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 
 * Jellyfin Server with Media Segments API
 * Jellyfin Server API Key (created by you)
+* Useful: A player that can actually use that!
+  * [Jellyfin Vue Fork](https://github.com/endrl/jellyfin-vue) (Download from Releases)
 
 ## Work in progress
 
