@@ -1,0 +1,51 @@
+login:
+  api_key: Clé d'API Jellyfin
+  server_address: Adresse du serveur Jellyfin
+  test_conn: Test de connexion
+  validation:
+    api_key_invalid: Clé d'API invalide
+    url_invalid: URL invalide. Doit commencer par http:// ou https://
+  connect_fail: Connection échoué !
+  auth_fail: Échec d'authentification !
+app:
+  theme:
+    title: Thème
+    system: Système
+    dark: Sombre
+    light: Clair
+  locale:
+    auto: Auto
+    en-US: Anglais
+    fr: Français
+    de: Allemand
+    title: Langues
+  title: Éditeur de segment
+  showVideoPlayer: Afficher le lecteur vidéo
+items:
+  select_collection: Collection
+  filter:
+    name: Recherche
+    collection: Collection
+editor:
+  saveSegment: Sauvegarder
+  deleteSure: Êtes-vous sûr de supprimer le segment '{Type}'?
+  deleteSureTitle: Supprimer un segment | Supprimer des segments | Supprimer {count} segments
+  time: Temps
+  deleteSegments: Êtes-vous sûr de supprimer tous les segments pour '{item}'?
+  newSegment: Nouveau segment
+  slider:
+    title: Éditeur de Slider
+  noSegments: Aucun segment disponible, créez-en un avec '+'
+'yes': 'Oui'
+'no': 'Non'
+segment:
+  start: Début
+  end: Fin
+  type: Type de segment
+  recaction: Action recommandé
+  edit: Éditez le segment
+  duration: Durée
+validation:
+  StartEnd: Le début est toujours avant la fin
+close: Fermé
+back: Retour
