@@ -3,8 +3,8 @@ import { useI18n } from 'vue-i18n'
 
 // generate imports
 const qLangList = import.meta.glob('../../node_modules/quasar/lang/*.mjs')
-const i18nLangList = import.meta.glob('../locales/*.yaml')
-const SUPPORTED_LOCALES = ['auto', 'en-US', 'de']
+const i18nLangList = import.meta.glob('../i18n/locale/*.yaml')
+const SUPPORTED_LOCALES = ['auto', 'en-US', 'fr', 'de']
 
 export function useLocales() {
   const $q = useQuasar()
@@ -18,6 +18,9 @@ export function useLocales() {
   const transformLocale = (isoCode: string) => {
     if (isoCode.includes('de')) {
       return 'de'
+    }
+    else if (isoCode.includes('fr')) {
+      return 'fr'
     }
     return isoCode
   }
@@ -37,7 +40,7 @@ export function useLocales() {
       })
       // vue-i18n
       // TODO we can track the imports to prevent import twice
-      i18nLangList[`../locales/${langIso}.yaml`]().then(lang => {
+      i18nLangList[`../i18n/locale/${langIso}.yaml`]().then(lang => {
         setLocaleMessage(langIso, lang.default)
       })
     } catch (error) {
