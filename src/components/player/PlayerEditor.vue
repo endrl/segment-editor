@@ -5,7 +5,8 @@
         <i-mdi-chevron-left></i-mdi-chevron-left>
       </q-btn>
       <div class="q-ml-md text-h6">
-        {{ item.SeriesName ? `${item.SeriesName} S${item.ParentIndexNumber}E${item.IndexNumber}: ${item.Name}` : item.Name
+        {{ item.SeriesName ? `${item.SeriesName} S${item.ParentIndexNumber}E${item.IndexNumber}: ${item.Name}` :
+        item.Name
         }}
       </div>
     </div>
@@ -18,8 +19,8 @@
       <SegmentSlider @player-timestamp="updatePlayerTimestamp" @update:model-value="updateItem"
         @delete-segment="deleteLocalSegment" @update-active-index="activeIdx = $event" :idx="idx" :activeIdx="activeIdx"
         :newTimestamp="newSegmentTimestamp" v-for="(segment, idx) in editingSegments" :segment="segment"
-        :segments="editingSegments" :item="item" :key="segment.ItemId + segment.Type + segment.TypeIndex" min="0"
-        :max="runtimeSeconds" thumb-label="always" class="full-width q-mt-sm">
+        :segments="editingSegments" :item="item" :key="segment.Id" min="0" :max="runtimeSeconds" thumb-label="always"
+        class="full-width q-mt-sm">
       </SegmentSlider>
       <div v-if="!editingSegments.length" class="row justify-center">
         <div>{{ $t('editor.noSegments') }}</div>
@@ -35,7 +36,7 @@
 
 <script setup lang="ts">
 import { useUtils } from 'src/composables/utils';
-import { ItemDto, MediaSegment, MediaSegmentAction, MediaSegmentType } from 'src/interfaces';
+import { ItemDto, MediaSegment, MediaSegmentType } from 'src/interfaces';
 import { useSegmentsStore } from 'stores/segments';
 import { useItemsStore } from 'stores/items';
 
@@ -47,7 +48,7 @@ import { useAppStore } from 'stores/app';
 const appStore = useAppStore()
 const { showVideoPlayer } = storeToRefs(appStore)
 
-const { sortSegmentsStart, ticksToMs } = useUtils()
+const { sortSegmentsStart, ticksToMs, generateUUID } = useUtils()
 
 const route = useRoute()
 const router = useRouter()
@@ -75,11 +76,10 @@ let editingSegments = reactive(JSON.parse(JSON.stringify(segs)));
 const runtimeSeconds = ticksToMs(item.RunTimeTicks) / 1000;
 
 const updateItem = (obj: any) => {
-  const found = editingSegments.find((seg: MediaSegment) => seg.ItemId == obj.itemId && seg.Type == obj.type && seg.TypeIndex == obj.typeIndex)
+  const found = editingSegments.find((seg: MediaSegment) => seg.Id == obj.id)
   if (found) {
-    found.Start = obj.start
-    found.End = obj.end
-    found.Action = obj.action
+    found.StartTicks = obj.start
+    found.EndTicks = obj.end
   }
 }
 
@@ -91,13 +91,9 @@ const updatePlayerTimestamp = (newtimestamp: number) => {
 
 const createSegmentFromPlayer = (obj: { type: MediaSegmentType; start: number; }) => {
   const seg: MediaSegment = {
-    Type: obj.type, TypeIndex: 0, Start: obj.start, End: obj.start + 1, ItemId: item.Id, Action: MediaSegmentAction.AUTO
+    Type: obj.type, StartTicks: obj.start, EndTicks: obj.start + 1, ItemId: item.Id, Id: generateUUID()
   }
 
-  const found = editingSegments.find((seg: MediaSegment) => seg.ItemId == item.Id && seg.Type == obj.type && seg.TypeIndex == 0)
-  if (found) {
-    seg.TypeIndex += 1
-  }
   editingSegments.push(seg)
   activeIdx.value = editingSegments.length - 1
 }

@@ -4,9 +4,8 @@
       <div class="q-mr-xs" style="width:3px; height:40px">
         <div v-if="idx == activeIdx && showVideoPlayer" class="bg-blue fit"></div>
       </div>
-      <q-btn @click="$emit('updateActiveIndex', props.idx)" :color="getColorByType(segment.Type)">{{ segment.Type }}{{
-        segment.TypeIndex ? ` ${segment.TypeIndex + 1}` :
-        '' }}</q-btn>
+      <q-btn @click="$emit('updateActiveIndex', props.idx)" :color="getColorByType(segment.Type)">{{ segment.Type
+        }}</q-btn>
       <div class="row items-center">
         <div class="q-ml-md column">
           <div>{{ $t('segment.start') }}</div>
@@ -36,8 +35,8 @@
       </q-btn>
     </div>
 
-    <q-range ref="sliderRef" :min="0" :step="0.1" :max="runtimeSeconds" v-model="range" class="full-width q-mt-sm q-px-sm"
-      :color="getColorByType(segment.Type)">
+    <q-range ref="sliderRef" :min="0" :step="0.1" :max="runtimeSeconds" v-model="range"
+      class="full-width q-mt-sm q-px-sm" :color="getColorByType(segment.Type)">
     </q-range>
   </div>
 </template>
@@ -71,12 +70,12 @@ const sliderRef = shallowRef<HTMLElement>();
 const runtimeSeconds = ticksToMs(props.item.RunTimeTicks) / 1000;
 const range = computed({
   get() {
-    return { min: props.segment.Start, max: props.segment.End }
+    return { min: props.segment.StartTicks, max: props.segment.EndTicks }
   },
   set(newValue: object) {
     const start = numberToNumber(newValue.min)
     const end = numberToNumber(newValue.max)
-    emit('update:modelValue', { itemId: props.item.Id, start, end, type: props.segment.Type, typeIndex: props.segment.TypeIndex, action: props.segment.Action })
+    emit('update:modelValue', { start, end, id: props.segment.Id })
   }
 })
 
@@ -90,7 +89,7 @@ watch(() => props.newTimestamp, (val) => {
       end = numberToNumber(val.currentTime)
     }
 
-    emit('update:modelValue', { itemId: props.item.Id, start, end, type: props.segment.Type, typeIndex: props.segment.TypeIndex, action: props.segment.Action })
+    emit('update:modelValue', { start, end, id: props.segment.Id })
   }
 })
 
@@ -104,7 +103,7 @@ const update = (ind: any, event: any) => {
     start = stringToNumber(event)
   }
 
-  emit('update:modelValue', { itemId: props.item.Id, start, end, type: props.segment.Type, typeIndex: props.segment.TypeIndex, action: props.segment.Action })
+  emit('update:modelValue', { start, end, id: props.segment.Id })
 }
 
 </script>

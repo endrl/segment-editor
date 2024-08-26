@@ -8,14 +8,6 @@ export const useSegmentsStore = defineStore('segments', () => {
   const localSegments = ref<Array<MediaSegment>>([])
 
   /**
- *  reset segments and get new one
- */
-  const getNewSegments = async () => {
-    const segments = await sapi.getSegments()
-    localSegments.value.splice(0)
-    localSegments.value.push(...segments.Items)
-  }
-  /**
 *  Gather new segments by id from server, deletes local cached ones
 */
   const getNewSegmentsById = async (itemId: ItemDto['Id']) => {
@@ -26,17 +18,22 @@ export const useSegmentsStore = defineStore('segments', () => {
     localSegments.value.push(...segments.Items)
   }
 
-
   /**
    * Save/update segments local and server
    * @param segment MediaSegment to save
    */
-  const saveSegment = (segment: MediaSegment) => {
+  const saveSegment = async (segment: MediaSegment) => {
     // update local and server
     localSegments.value.push(segment)
-    sapi.updateSegment(segment)
-  }
+    // stringify and parse (seconds to ticks creates reactivity)
+    const offseg = JSON.parse(JSON.stringify(segment))
+    // remove id
+    //offseg.Id = undefined;
+    sapi.createSegment(offseg)
 
+    // FIXME: Returned elements have 0000000000000 as Id. When you fetch it's correct. EF Core doesn't seem to return the id after save?!
+    // Solution: When a segment is created we generate a new uuid, the database accepts them as long they are unique
+  }
 
   /**
    * Update segment
@@ -44,7 +41,7 @@ export const useSegmentsStore = defineStore('segments', () => {
    */
   const saveUpdatedSegment = (segment: MediaSegment) => {
     // check if segment is already available, if so remove it
-    const found = localSegments.value.findIndex((seg: MediaSegment) => seg.Type == segment.Type && seg.TypeIndex == segment.TypeIndex && seg.ItemId == segment.ItemId)
+    const found = localSegments.value.findIndex((seg: MediaSegment) => seg.Id)
     if (found > -1) {
       localSegments.value.splice(found, 1)
     }
@@ -56,12 +53,6 @@ export const useSegmentsStore = defineStore('segments', () => {
    * @param segment New segment
    */
   const saveNewSegment = (segment: MediaSegment) => {
-    // check if segment is already available
-    const found = localSegments.value.findIndex((seg: MediaSegment) => seg.Type == segment.Type && seg.ItemId == segment.ItemId)
-    // a result means the TypeIndex neeeds to be incremented
-    if (found > -1) {
-      segment.TypeIndex = segment.TypeIndex + 1
-    }
     saveSegment(segment)
   }
 
@@ -81,7 +72,7 @@ export const useSegmentsStore = defineStore('segments', () => {
    */
   const deleteSegment = (segment: MediaSegment) => {
     // check if segment is available, if so remove it
-    const found = localSegments.value.findIndex((seg: MediaSegment) => seg.Type == segment.Type && seg.TypeIndex == segment.TypeIndex && seg.ItemId == segment.ItemId)
+    const found = localSegments.value.findIndex((seg: MediaSegment) => seg.Id == segment.Id)
     if (found > -1) {
       localSegments.value.splice(found, 1)
     }
@@ -96,10 +87,14 @@ export const useSegmentsStore = defineStore('segments', () => {
     const found = localSegments.value.filter((seg: MediaSegment) => seg.ItemId == itemId)
     // simply filter and replace array
     localSegments.value = localSegments.value.filter((seg: MediaSegment) => seg.ItemId != itemId)
-    if (found.length > 0)
-      sapi.deleteSegmentsWithId(itemId)
+
+    found.forEach(el => {
+      sapi.deleteSegment(el)
+    });
+
+
   }
 
 
-  return { getNewSegments, saveUpdatedSegment, saveNewSegment, saveNewSegments, deleteSegment, deleteSegments, getNewSegmentsById, localSegments }
+  return { saveUpdatedSegment, saveNewSegment, saveNewSegments, deleteSegment, deleteSegments, getNewSegmentsById, localSegments }
 })

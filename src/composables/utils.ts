@@ -124,6 +124,20 @@ export function useUtils() {
   }
 
   /**
+* Converts seconds to Ticks
+*
+* @param ticks - Number of .NET ticks to convert
+* @returns The converted value in ticks
+*/
+  function secondsToTicks(seconds: number | null | undefined): number {
+    if (!seconds) {
+      seconds = 0;
+    }
+
+    return Math.round(seconds * 10_000_000);
+  }
+
+  /**
    * Parse a number string to 3 digits float
    * @param numb number to parse
    * @returns
@@ -149,10 +163,10 @@ export function useUtils() {
    * @returns
    */
   function sortSegmentsStart(sA: MediaSegment, sB: MediaSegment) {
-    if (sA.Start < sB.Start) {
+    if (sA.StartTicks < sB.StartTicks) {
       return -1;
     }
-    if (sA.Start > sB.Start) {
+    if (sA.StartTicks > sB.StartTicks) {
       return 1;
     }
     // or equal
@@ -251,5 +265,26 @@ export function useUtils() {
     return totalSecs
   }
 
-  return { getImageOfStream, getColorByType, getReadableTimeFromSeconds, getTimefromSeconds, getSecondsFromTime, ticksToMs, stringToNumber, numberToNumber, sortSegmentsStart, getItemImageUrl }
+
+  /**
+   * Create uuid
+   * @returns uuid
+   */
+  function generateUUID() {
+    let d = new Date().getTime();
+    let d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now() * 1000)) || 0;
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      let r = Math.random() * 16;
+      if (d > 0) {
+        r = (d + r) % 16 | 0;
+        d = Math.floor(d / 16);
+      } else {
+        r = (d2 + r) % 16 | 0;
+        d2 = Math.floor(d2 / 16);
+      }
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
+  return { getImageOfStream, getColorByType, getReadableTimeFromSeconds, getTimefromSeconds, getSecondsFromTime, ticksToMs, secondsToTicks, stringToNumber, numberToNumber, sortSegmentsStart, getItemImageUrl, generateUUID }
 }

@@ -6,6 +6,9 @@ export const useApiStore = defineStore('api', () => {
   const serverAddress = ref('http://localhost:8096')
   const validConnection = ref(false)
   const validAuth = ref(false)
+  const pluginSegmentsApiInstalled = ref(false)
+  const pluginSegmentsApiVersion = ref('0.0.0')
+
   let pluginAuthHeader: HeadersInit | undefined = undefined
 
   // When we run as plugin we inject address and auth
@@ -53,8 +56,9 @@ export const useApiStore = defineStore('api', () => {
   /**
    * Send post message to server
    * @param body the body to post
+   * @param query the query
    */
-  const postJson = async (endpoint: string, body: string | any) => {
+  const postJson = async (endpoint: string, body: string | any, query?: Map<string, string>) => {
     let headers: HeadersInit = {
       'Content-Type': 'application/json'
     }
@@ -68,7 +72,7 @@ export const useApiStore = defineStore('api', () => {
       headers: headers,
       body: JSON.stringify(body),
     };
-    const response = await fetch(buildUrl(endpoint), reqInit);
+    const response = await fetch(buildUrl(endpoint, query), reqInit);
 
     // filter for broken access
     if (response.status == 401) {
@@ -91,9 +95,12 @@ export const useApiStore = defineStore('api', () => {
  * @param body the body to post
  */
   const deleteJson = async (endpoint: string, body?: string, query?: Map<string, string>) => {
+    if (body != undefined) {
+      body = JSON.stringify(body)
+    }
     const reqInit: RequestInit = {
       method: 'DELETE',
-      body: JSON.stringify(body),
+      body: body,
       headers: pluginAuthHeader,
     };
     const response = await fetch(buildUrl(endpoint, query), reqInit);
@@ -104,8 +111,6 @@ export const useApiStore = defineStore('api', () => {
     }
 
     validConnection.value = response.ok
-    const jsonData = await response.json();
-    return jsonData;
   }
 
   const testConnection = async () => {
@@ -113,6 +118,7 @@ export const useApiStore = defineStore('api', () => {
     try {
       response = await fetchWithAuth('System/Info');
     } catch (error) {
+      console.error('testConnection Error', error)
       validConnection.value = false
       validAuth.value = false
       return false
@@ -120,7 +126,27 @@ export const useApiStore = defineStore('api', () => {
 
     validAuth.value = response.status != 401
     validConnection.value = response.ok
+
     return response.ok && validAuth.value
+  }
+
+  // Test for the installed MediaSegments API Plugin
+  const testServerPluginSegmentsApi = async () => {
+    let response;
+    try {
+      response = await fetchWithAuthJson('MediaSegmentsApi');
+
+    } catch (error) {
+      console.error('testPluginSegmentsApi Error', error)
+      return false
+    }
+    if (response && response.version) {
+      pluginSegmentsApiInstalled.value = true
+      pluginSegmentsApiVersion.value = response.version
+      return
+    }
+    pluginSegmentsApiInstalled.value = false
+    pluginSegmentsApiVersion.value = '0.0.0'
   }
 
   const fetchWithAuthJson = async (endpoint: string, query?: Map<string, string>) => {
@@ -130,10 +156,14 @@ export const useApiStore = defineStore('api', () => {
       validAuth.value = false
       return [];
     }
+    // plugin endpoint tests
+    if (response.status == 404) {
+      return false;
+    }
 
     const jsonData = await response.json();
     return jsonData;
   }
 
-  return { apiKey, serverAddress, validConnection, validAuth, fetchWithAuthJson, fetchWithAuth, testConnection, postJson, deleteJson, buildUrl }
+  return { apiKey, serverAddress, validConnection, validAuth, pluginSegmentsApiInstalled, pluginSegmentsApiVersion, fetchWithAuthJson, fetchWithAuth, testConnection, postJson, deleteJson, buildUrl, testServerPluginSegmentsApi }
 })

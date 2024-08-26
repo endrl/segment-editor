@@ -7,61 +7,19 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 
 ## Requirements
 
-* Jellyfin Server with Media Segments API
+* ⚠️ Jellyfin 10.10 unstable
+* Jellyfin Plugin [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
 * Jellyfin Server API Key (created by you)
 
 ## Installation
 
-Just as docker compose file available
-
-```yaml
-# Testing Jellyfin Media Segments
-# DO NOT MESS WITH YOUR STABLE SETUP! Use clean config directory
-# For amd64 only, no arm64 build available
-
-version: "3.0"
-services:
-### Jellyfin server with media segments api (be aware that the jellyfin web player is NOT patched at this point - you need jellyfin-vue)
-  jellyfin:
-    image: ghcr.io/endrl/jellyfin:latest
-    container_name: jellyfin-ms
-    volumes:
-      - /path/to/library:/config
-      - /path/to/cache:/cache
-      # media libraries
-      - /path/to/tvseries:/data/tvshows
-      - /path/to/movies:/data/movies
-    ports:
-      - 7096:8096
-      #- 8920:8920 #optional
-      #- 7359:7359/udp #optional
-      #- 1900:1900/udp #optional
-    restart: unless-stopped
-### Patched jellyfin-vue as player to see media segments in action.
-### Also available as tiny app for your desktop
-### Project: https://github.com/endrl/jellyfin-vue
-  jellyfin-vue:
-    image: ghcr.io/endrl/jellyfin-vue:latest
-    container_name: jellyfin-vue
-    ports:
-      - 7097:80
-    restart: unless-stopped
-### Jellyfin Segment Editor - Media Segments management made easy
-### Also available as tiny app for your desktop
-### Project: https://github.com/endrl/segment-editor#jellyfin-segment-editor
-  jellyfin-se:
-    image: ghcr.io/endrl/jellyfin-se:latest
-    container_name: jellyfin-se
-    ports:
-      - 7098:80
-    restart: unless-stopped
-```
-
+* Download for your platform from [Releases](https://github.com/endrl/segment-editor/releases/latest)
 
 ## Related projects
 
 * Jellyfin Plugin: [Media Analyzer](https://github.com/endrl/jellyfin-plugin-media-analyzer)
 * Jellyfin Plugin: [.EDL Creator](https://github.com/endrl/jellyfin-plugin-edl)
+* Jellyfin Plugin: [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
 * Player: [Jellyfin Vue Fork](https://github.com/endrl/jellyfin-vue)
 
 ## Work in progress

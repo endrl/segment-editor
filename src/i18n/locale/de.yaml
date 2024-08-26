@@ -17,7 +17,10 @@ app:
     auto: Auto
     en-US: Englisch
     de: Deutsch
+    fr: Französisch
     title: Sprache
+  plugins:
+    title: Installierte Server Plugins
   title: Segment Editor
   showVideoPlayer: Videoplayer anzeigen
 items:
@@ -41,7 +44,6 @@ segment:
   start: Start
   end: Ende
   type: Segment Typ
-  recaction: Empfohlene Aktion
   edit: Segment bearbeiten
   duration: Dauer
 validation:

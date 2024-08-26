@@ -1,4 +1,5 @@
 export enum MediaSegmentType {
+  UNKNOWN = 'Unknown',
   INTRO = 'Intro',
   OUTRO = 'Outro',
   PREVIEW = 'Preview',
@@ -6,21 +7,12 @@ export enum MediaSegmentType {
   COMMERCIAL = 'Commercial'
 }
 
-export enum MediaSegmentAction {
-  AUTO = 'Auto',
-  NONE = 'None',
-  SKIP = 'Skip',
-  PROMPT = 'Prompt',
-  MUTE = 'Mute'
-}
-
 export class MediaSegment {
-  Start = 0;
-  End = 1;
+  Id = 'notlegit';
+  StartTicks = 0;
+  EndTicks = 1;
   Type: MediaSegmentType = MediaSegmentType.INTRO;
-  TypeIndex = 0;
   ItemId = 'notlegit';
-  Action: MediaSegmentAction = MediaSegmentAction.AUTO;
 }
 
 export enum ItemType {

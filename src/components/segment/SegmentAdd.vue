@@ -17,15 +17,15 @@
           </div>
           <div class="text-subtitle2 col-12">
             <div>
-              {{ $t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.Start)) }}
+              {{ $t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.StartTicks)) }}
             </div>
             <div>
-              {{ $t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.End))
+              {{ $t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks))
               }}
             </div>
             <div>
-              {{ $t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.End -
-                localSegment.Start))
+              {{ $t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks -
+    localSegment.StartTicks))
               }}
             </div>
           </div>
@@ -33,14 +33,14 @@
       </q-card-section>
 
       <q-card-section>
-        <q-input v-model.number="localSegment.Start" :label="$t('segment.start')" :rules="[rule]" reactive-rules
+        <q-input v-model.number="localSegment.StartTicks" :label="$t('segment.start')" :rules="[rule]" reactive-rules
           suffix="s" min="0" type="number">
           <template #prepend>
             <i-mdi-ray-start-arrow />
           </template>
         </q-input>
-        <q-input v-model.number="localSegment.End" :label="$t('segment.end')" :rules="[rule]" reactive-rules suffix="s"
-          min="0" type="number">
+        <q-input v-model.number="localSegment.EndTicks" :label="$t('segment.end')" :rules="[rule]" reactive-rules
+          suffix="s" min="0" type="number">
           <template #prepend>
             <i-mdi-ray-end-arrow />
           </template>
@@ -48,12 +48,6 @@
         <q-select v-model="localSegment.Type" :options="Object.values(MediaSegmentType)" :label="$t('segment.type')">
           <template #prepend>
             <i-mdi-movie />
-          </template>
-        </q-select>
-        <q-select v-model="localSegment.Action" :options="Object.values(MediaSegmentAction)"
-          :label="$t('segment.recaction')">
-          <template #prepend>
-            <i-mdi-play-pause />
           </template>
         </q-select>
       </q-card-section>
@@ -65,12 +59,12 @@
 </template>
 
 <script setup lang="ts">
-import { ItemDto, MediaSegment, MediaSegmentAction, MediaSegmentType } from 'src/interfaces';
+import { ItemDto, MediaSegment, MediaSegmentType } from 'src/interfaces';
 import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useUtils } from 'src/composables/utils'
 
-const { getReadableTimeFromSeconds } = useUtils()
+const { getReadableTimeFromSeconds, generateUUID } = useUtils()
 const { t } = useI18n()
 
 interface Props {
@@ -81,9 +75,11 @@ const props = defineProps<Props>()
 const emit = defineEmits(['saveSegment'])
 
 const showDialog = ref(false)
-const localSegment = reactive(new MediaSegment())
+let localSegment = reactive(new MediaSegment())
 
-const rule = () => (localSegment.Start >= localSegment.End) ? t('validation.StartEnd') : true;
+localSegment.Id = generateUUID()
+
+const rule = () => (localSegment.StartTicks >= localSegment.EndTicks) ? t('validation.StartEnd') : true;
 
 const saveSegment = async () => {
   if (rule() !== true) return

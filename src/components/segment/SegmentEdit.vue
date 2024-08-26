@@ -11,46 +11,36 @@
             <q-btn flat @click="$emit('update:modelValue', false)"><q-icon><i-mdi-close /></q-icon></q-btn>
           </div>
           <div class="text-subtitle2 col-12">
-            <div class="wrap">{{ item.Name }}: {{ localSegment.Type }}{{ localSegment.TypeIndex > 0 ?
-              `(${localSegment.TypeIndex + 1})`
-              :
-              ''
-            }}
+            <div class="wrap">{{ item.Name }}: {{ localSegment.Type }}
             </div>
             <div>
-              {{ $t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.Start)) }}
+              {{ $t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.StartTicks)) }}
             </div>
             <div>
-              {{ $t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.End))
+              {{ $t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks))
               }}
             </div>
             <div>
-              {{ $t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.End -
-                localSegment.Start))
+              {{ $t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks -
+    localSegment.StartTicks))
               }}
             </div>
           </div>
         </div>
       </q-card-section>
       <q-card-section>
-        <q-input v-model.number="localSegment.Start" :label="$t('segment.start')" :rules="[rule]" reactive-rules
+        <q-input v-model.number="localSegment.StartTicks" :label="$t('segment.start')" :rules="[rule]" reactive-rules
           suffix="s" type="number">
           <template #prepend>
             <i-mdi-ray-start-arrow />
           </template>
         </q-input>
-        <q-input v-model.number="localSegment.End" :label="$t('segment.end')" :rules="[rule]" reactive-rules suffix="s"
-          type="number">
+        <q-input v-model.number="localSegment.EndTicks" :label="$t('segment.end')" :rules="[rule]" reactive-rules
+          suffix="s" type="number">
           <template #prepend>
             <i-mdi-ray-end-arrow />
           </template>
         </q-input>
-        <q-select v-model="localSegment.Action" :options="Object.values(MediaSegmentAction)"
-          :label="$t('segment.recaction')">
-          <template #prepend>
-            <i-mdi-play-pause />
-          </template>
-        </q-select>
       </q-card-section>
       <q-card-actions align="around">
         <q-btn @click.prevent="saveSegment">{{ $t('editor.saveSegment') }}</q-btn>
@@ -61,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ItemDto, MediaSegment, MediaSegmentAction } from 'src/interfaces';
+import { ItemDto, MediaSegment } from 'src/interfaces';
 import { reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDialog } from 'src/composables/dialog';
@@ -91,13 +81,15 @@ watch(() => props.segment, (newValue: Props['segment']) => {
 
 const saveSegment = () => {
   if (rule() !== true) return
+  // we need to delete segment first
+  emit('deleteSegment', JSON.parse(JSON.stringify(localSegment)));
   emit('saveSegment', JSON.parse(JSON.stringify(localSegment)));
 }
 const deleteSegment = () => {
   emit('deleteSegment', JSON.parse(JSON.stringify(localSegment)));
 }
 
-const rule = () => localSegment.Start >= localSegment.End ? t('validation.StartEnd') : true;
+const rule = () => localSegment.StartTicks >= localSegment.EndTicks ? t('validation.StartEnd') : true;
 
 const openConfirmDialog = () => {
   $q.dialog({

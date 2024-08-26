@@ -19,8 +19,8 @@ const durationSecs = ticksToMs(props.duration) / 1000;
 
 const getStyle = computed(() => {
   return {
-    left: Math.round(props.parentWidth / durationSecs * props.segment.Start) + 'px',
-    width: Math.max(8, Math.round(props.parentWidth / durationSecs * (props.segment.End - props.segment.Start))) + 'px',
+    left: Math.round(props.parentWidth / durationSecs * props.segment.StartTicks) + 'px',
+    width: Math.max(8, Math.round(props.parentWidth / durationSecs * (props.segment.EndTicks - props.segment.StartTicks))) + 'px',
   }
 });
 

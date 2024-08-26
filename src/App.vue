@@ -9,7 +9,7 @@ import { useItemsStore } from 'stores/items';
 import { useTauri } from 'src/composables/tauri';
 
 const { setTheme, setLocale } = useAppStore();
-const { testConnection } = useApiStore();
+const { testConnection, testServerPluginSegmentsApi } = useApiStore();
 const { getCollectionss } = useItemsStore();
 const { hide_splashscreen } = useTauri();
 
@@ -24,6 +24,9 @@ setLocale();
 hide_splashscreen()
 
 // Test connection async
+console.log('Testing connection state')
 testConnection().then((state) => { if (state) { getCollectionss() } });
-</script>
 
+console.log('Testing plugin state')
+testServerPluginSegmentsApi()
+</script>

@@ -8,8 +8,8 @@
       </q-chip>
 
       <q-chip clickable @click="showDialogWith(segment)" class="q-mb-sm q-mr-sm" :color="getColorByType(segment.Type)"
-        v-for="segment in getCurrentSegments" :key="segment.Type + segment.TypeIndex + segment.ItemId + '_chip'">
-        {{ segment.Type }}: {{ getReadableTimeFromSeconds(Math.round(segment.End - segment.Start)) }}
+        v-for="segment in getCurrentSegments" :key="segment.Id + '_chip'">
+        {{ segment.Type }}: {{ getReadableTimeFromSeconds(Math.round(segment.EndTicks - segment.StartTicks)) }}
       </q-chip>
 
       <SegmentAdd :itemId="item.Id" @saveSegment="saveNewSegment" />
@@ -24,8 +24,8 @@
       </q-chip>
     </div>
     <div ref="bar" class="segment-bar full-width relative-position segment-bar-color">
-      <SegmentVisual v-for="segment in getCurrentSegments" :key="segment.Type + segment.TypeIndex + segment.ItemId"
-        :segment="segment" :duration="item.RunTimeTicks" :parentWidth="pwidth">
+      <SegmentVisual v-for="segment in getCurrentSegments" :key="segment.Id" :segment="segment"
+        :duration="item.RunTimeTicks" :parentWidth="pwidth">
       </SegmentVisual>
     </div>
   </div>

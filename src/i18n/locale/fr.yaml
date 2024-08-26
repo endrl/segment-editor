@@ -19,6 +19,8 @@ app:
     fr: Français
     de: Allemand
     title: Langues
+  plugins:
+    title: Plugins de serveur installés
   title: Éditeur de segment
   showVideoPlayer: Afficher le lecteur vidéo
 items:
@@ -42,7 +44,6 @@ segment:
   start: Début
   end: Fin
   type: Type de segment
-  recaction: Action recommandé
   edit: Éditez le segment
   duration: Durée
 validation:
