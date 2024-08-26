@@ -2,7 +2,7 @@ import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 
 // generate imports
-const qLangList = import.meta.glob('../../node_modules/quasar/lang/*.mjs')
+const qLangList = import.meta.glob('../../node_modules/quasar/lang/*.js')
 const i18nLangList = import.meta.glob('../i18n/locale/*.yaml')
 const SUPPORTED_LOCALES = ['auto', 'en-US', 'fr', 'de']
 
@@ -35,7 +35,7 @@ export function useLocales() {
     langIso = transformLocale(langIso)
     try {
       // quasar
-      qLangList[`../../node_modules/quasar/lang/${langIso}.mjs`]().then(lang => {
+      qLangList[`../../node_modules/quasar/lang/${langIso}.js`]().then(lang => {
         $q.lang.set(lang.default)
       })
       // vue-i18n
