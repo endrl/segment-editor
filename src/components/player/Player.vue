@@ -34,8 +34,8 @@
               <i-mdi-volume-mute v-else />
             </q-icon>
             <q-menu anchor="top left" self="bottom left">
-              <div class="bg-black">
-                <q-slider @click.stop :min="0" :max="1" vertical v-model="volume">
+              <div class="transparent q-my-md q-mx-sm">
+                <q-slider @click.stop :min="0" :max="1" :step="0.1" vertical reverse v-model="volume">
                 </q-slider>
               </div>
             </q-menu>
