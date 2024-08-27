@@ -75,14 +75,22 @@ export const useItemsStore = defineStore('items', () => {
   const filteredItems = computed(() => localItems.value.filter((item) => collectionToType.value == item.Type && item.Name.toLowerCase().includes(filterName.value.toLowerCase())))
 
   // Get and reset items whenever connection is io or collection changed
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  watch([selectedCol, validConnection, validAuth], ([newcol, connection, auth]) => {
+  watch([selectedCol, validConnection, validAuth], ([selcol, connection, auth]) => {
+
     if (connection && auth) {
       // on intial startup collections are empty. This is already in App.vue
-      if (selectedCol.value == undefined)
+      if (selcol == '')
         getCollectionss();
 
       getNewItems()
+    }
+  })
+
+  // When auth changed check for server plugins state
+  watch([validAuth], ([auth]) => {
+
+    if (auth) {
+      apiStore.testServerPluginSegmentsApi()
     }
   })
 
