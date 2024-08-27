@@ -113,6 +113,7 @@ export const useApiStore = defineStore('api', () => {
     validConnection.value = response.ok
   }
 
+  // Test if connection and auth is valid
   const testConnection = async () => {
     let response;
     try {
