@@ -3,57 +3,48 @@
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:3111",
-    "distDir": "../dist/spa"
+    "frontendDist": "../dist/spa",
+    "devUrl": "http://localhost:3111"
   },
-  "package": {
-    "productName": "Jellyfin Segment Editor",
-    "version": "../package.json"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false
+  "bundle": {
+    "active": true,
+    "category": "Productivity",
+    "copyright": "MIT",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "bundle": {
-      "active": true,
-      "category": "Productivity",
-      "copyright": "MIT",
+    "longDescription": "Manage Intro, Outro and other media segments for your Jellyfin Server",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "shortDescription": "Manage Jellyfin Media Segments",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "com.endrl.segment.editor",
-      "longDescription": "Manage Intro, Outro and other media segments for your Jellyfin Server",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "Manage Jellyfin Media Segments",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
-    },
-    "security": {
-      "csp": null,
-      "dangerousUseHttpScheme": true
-    },
-    "updater": {
-      "active": false
-    },
+    }
+  },
+  "productName": "Jellyfin Segment Editor",
+  "version": "../package.json",
+  "identifier": "com.endrl.segment.editor",
+  "plugins": {},
+  "app": {
     "windows": [
       {
         "fullscreen": false,
@@ -69,8 +60,12 @@
         "decorations": false,
         "center": true,
         "url": "splashscreen.html",
-        "label": "splashscreen"
+        "label": "splashscreen",
+        "visible": false
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }

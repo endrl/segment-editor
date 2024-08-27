@@ -5,7 +5,7 @@ export function useTauri() {
    */
   const hide_splashscreen = async () => {
     if ('__TAURI__' in window) {
-      const { invoke } = await import('@tauri-apps/api')
+      const { invoke } = await import('@tauri-apps/api/core')
       invoke('close_splashscreen')
     }
   }

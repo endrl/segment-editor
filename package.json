@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.12",
-    "@tauri-apps/api": "^1.5.1",
+    "@tauri-apps/api": "^2.0.0-rc.0",
     "@vueuse/core": "^11.0.3",
     "blurhash": "^2.0.5",
     "comlink": "^4.4.1",
@@ -32,7 +32,7 @@
     "@intlify/vite-plugin-vue-i18n": "^3.4.0",
     "@quasar/app-vite": "^1.9.5",
     "@quasar/cli": "^2.4.1",
-    "@tauri-apps/cli": "^1.5.4",
+    "@tauri-apps/cli": "^2.0.0-rc.7",
     "@types/node": "22.5.0",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",

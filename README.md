@@ -24,9 +24,10 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 
 ## Work in progress
 
-* Fix: Movie collections
-* [X] Movies should open in player view
+* List all versions of a movie
+* [X] Player view
 * Server side search query
+* Copy/Paste segments
 * Add audio support
 * More filter
 
@@ -73,6 +74,7 @@ quasar build
 ```
 
 ## Tauri App building
+
 Install [Rust](https://www.rust-lang.org/learn/get-started)
 
 ### Tauri dev
