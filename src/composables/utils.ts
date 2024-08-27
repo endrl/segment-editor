@@ -104,6 +104,8 @@ export function useUtils() {
         return 'lime'
       case 'Commercial':
         return 'red'
+      case 'Unknown':
+        return 'grey-6'
       default:
         return 'white'
     }
