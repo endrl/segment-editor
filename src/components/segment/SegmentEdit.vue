@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row">
           <div class="text-h6 col-10 text-ellipsis">
-            {{ $t('segment.edit') }}
+            {{ t('segment.edit') }}
 
           </div>
           <div class="col-shrink col-2">
@@ -14,14 +14,14 @@
             <div class="wrap">{{ item.Name }}: {{ localSegment.Type }}
             </div>
             <div>
-              {{ $t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.StartTicks)) }}
+              {{ t('segment.start') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.StartTicks)) }}
             </div>
             <div>
-              {{ $t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks))
+              {{ t('segment.end') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks))
               }}
             </div>
             <div>
-              {{ $t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks -
+              {{ t('segment.duration') }}: {{ getReadableTimeFromSeconds(Math.round(localSegment.EndTicks -
     localSegment.StartTicks))
               }}
             </div>
@@ -29,13 +29,13 @@
         </div>
       </q-card-section>
       <q-card-section>
-        <q-input v-model.number="localSegment.StartTicks" :label="$t('segment.start')" :rules="[rule]" reactive-rules
+        <q-input v-model.number="localSegment.StartTicks" :label="t('segment.start')" :rules="[rule]" reactive-rules
           suffix="s" type="number">
           <template #prepend>
             <i-mdi-ray-start-arrow />
           </template>
         </q-input>
-        <q-input v-model.number="localSegment.EndTicks" :label="$t('segment.end')" :rules="[rule]" reactive-rules
+        <q-input v-model.number="localSegment.EndTicks" :label="t('segment.end')" :rules="[rule]" reactive-rules
           suffix="s" type="number">
           <template #prepend>
             <i-mdi-ray-end-arrow />
@@ -43,7 +43,8 @@
         </q-input>
       </q-card-section>
       <q-card-actions align="around">
-        <q-btn @click.prevent="saveSegment">{{ $t('editor.saveSegment') }}</q-btn>
+        <q-btn @click.prevent="saveSegment">{{ t('editor.saveSegment') }}</q-btn>
+        <q-btn @click.prevent="saveSegmentClipboard"><i-mdi-content-copy /></q-btn>
         <q-btn @click.prevent="openConfirmDialog"><i-mdi-delete /></q-btn>
       </q-card-actions>
     </q-card>
@@ -54,11 +55,11 @@
 import { ItemDto, MediaSegment } from 'src/interfaces';
 import { reactive, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useDialog } from 'src/composables/dialog';
 import { useUtils } from 'src/composables/utils'
 import { useQuasar } from 'quasar'
+import { useSessionStore } from 'stores/session';
 
-
+const { saveSegmentToClipboard } = useSessionStore()
 const { getReadableTimeFromSeconds } = useUtils()
 const { t } = useI18n()
 const $q = useQuasar()
@@ -100,5 +101,10 @@ const openConfirmDialog = () => {
   }).onOk(() => {
     deleteSegment()
   })
+}
+
+const saveSegmentClipboard = () => {
+  saveSegmentToClipboard(localSegment)
+  $q.notify({ message: t('editor.segmentCopiedToClipboard') })
 }
 </script>

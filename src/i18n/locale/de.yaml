@@ -38,6 +38,8 @@ editor:
   slider:
     title: Slider Editor
   noSegments: Keine Segmente gefunden, erstelle eines mit '+'
+  noSegmentInClipboard: Kein Segment in der Zwischenablage
+  segmentCopiedToClipboard: Segment in die Zwischenablage kopiert
 'yes': Ja
 'no': Nein
 segment:
@@ -50,3 +52,7 @@ validation:
   StartEnd: Start liegt immer vor dem Ende
 close: Schließen
 back: Zurück
+plugin:
+  edl:
+    enable: EDL Unterstützung
+    created: Edl Datei wurde erstellt

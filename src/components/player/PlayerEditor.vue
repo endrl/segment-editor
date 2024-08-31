@@ -89,9 +89,9 @@ const updatePlayerTimestamp = (newtimestamp: number) => {
   playerTimestamp.value = newtimestamp
 }
 
-const createSegmentFromPlayer = (obj: { type: MediaSegmentType; start: number; }) => {
+const createSegmentFromPlayer = (obj: { type: MediaSegmentType; start: number; end: number }) => {
   const seg: MediaSegment = {
-    Type: obj.type, StartTicks: obj.start, EndTicks: obj.start + 1, ItemId: item.Id, Id: generateUUID()
+    Type: obj.type, StartTicks: obj.start, EndTicks: obj.end ? obj.end : obj.start + 1, ItemId: item.Id, Id: generateUUID()
   }
 
   editingSegments.push(seg)

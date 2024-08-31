@@ -1,11 +1,13 @@
 <template>
-  <div class="q-mb-md text-red" v-if="!apiStore.validConnection">{{ $t('login.connect_fail') }}</div>
-  <div class="q-mb-md text-red" v-if="apiStore.validConnection && !apiStore.validAuth">{{ $t('login.auth_fail') }}</div>
-  <q-input v-model="serverAddress" :rules="[address_rule]" :label="$t('login.server_address')"
+  <div class="text-h6">Server</div>
+
+  <div class="q-mb-md text-red" v-if="!apiStore.validConnection">{{ t('login.connect_fail') }}</div>
+  <div class="q-mb-md text-red" v-if="apiStore.validConnection && !apiStore.validAuth">{{ t('login.auth_fail') }}</div>
+  <q-input v-model="serverAddress" :rules="[address_rule]" :label="t('login.server_address')"
     placeholder="http://jellyfin:8096"></q-input>
-  <q-input v-model="apiKey" :rules="[apikey_rule]" :label="$t('login.api_key')"
+  <q-input v-model="apiKey" :rules="[apikey_rule]" :label="t('login.api_key')"
     placeholder="abc8c48c912f4e1199c5b350e8f469e5"></q-input>
-  <q-btn class="q-mt-sm" color="primary" @click.prevent="apiStore.testConnection">{{ $t('login.test_conn') }}</q-btn>
+  <q-btn class="q-mt-sm" color="primary" @click.prevent="apiStore.testConnection">{{ t('login.test_conn') }}</q-btn>
 </template>
 
 <script lang="ts" setup>

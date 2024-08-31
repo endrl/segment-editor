@@ -5,10 +5,13 @@
 <script lang="ts" setup>
 import { useAppStore } from 'stores/app';
 import { useApiStore } from 'stores/api';
+import { usePluginStore } from 'stores/plugin';
+
 import { useTauri } from 'src/composables/tauri';
 
 const { setTheme, setLocale } = useAppStore();
-const { testConnection, testServerPluginSegmentsApi } = useApiStore();
+const { testConnection } = useApiStore();
+const { testServerPlugins } = usePluginStore();
 const { hide_splashscreen } = useTauri();
 
 
@@ -26,5 +29,5 @@ console.log('Testing connection state')
 testConnection()
 
 console.log('Testing plugin state')
-testServerPluginSegmentsApi()
+testServerPlugins()
 </script>

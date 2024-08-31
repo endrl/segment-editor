@@ -1,13 +1,14 @@
 <template>
   <q-dialog v-model="showDialog" :persistent="!apiStore.validConnection && !apiStore.validAuth">
-    <q-card style="width: 280px;">
+    <q-card style="width: 300px;">
       <q-card-section>
-        <div class="text-h6">Server</div>
         <AuthSettings />
       </q-card-section>
       <q-card-section>
-        <div class="text-h6">App</div>
         <AppSettings />
+      </q-card-section>
+      <q-card-section>
+        <PluginSettings />
       </q-card-section>
     </q-card>
   </q-dialog>

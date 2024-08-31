@@ -86,13 +86,5 @@ export const useItemsStore = defineStore('items', () => {
     }
   })
 
-  // When auth changed check for server plugins state
-  watch([validAuth], ([auth]) => {
-
-    if (auth) {
-      apiStore.testServerPluginSegmentsApi()
-    }
-  })
-
   return { localItems, collections, selectedCol, filteredItems, filterName, getCollectionss, getMoreItems, pushMoreItems }
 })

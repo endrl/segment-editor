@@ -8,31 +8,39 @@
         }}</q-btn>
       <div class="row items-center">
         <div class="q-ml-md column">
-          <div>{{ $t('segment.start') }}</div>
+          <div>{{ t('segment.start') }}</div>
           <div style="font-size: 80%;">{{ getTimefromSeconds(range.min) }}</div>
         </div>
         <q-input :model-value="range.min" type="number" min="0" outline class="q-ml-sm" dense style="width: 90px"
           step="0.1" @change="update(0, $event)"></q-input>
         <q-btn v-if="showVideoPlayer" class="q-ml-sm" round outline dense @click="$emit('playerTimestamp', range.min)">
-          <q-icon><i-mdi-skip-forward /></q-icon>
+          <q-icon size="18px"><i-mdi-skip-forward /></q-icon>
         </q-btn>
       </div>
       <div class="row items-center">
         <div class="q-ml-md column">
-          <div>{{ $t('segment.end') }}</div>
+          <div>{{ t('segment.end') }}</div>
           <div style="font-size: 80%;">{{ getTimefromSeconds(range.max) }}</div>
         </div>
         <q-input :model-value="range.max" type="number" min="0" outline style="width: 90px" class="q-ml-sm" dense
           step="0.1" @change="update(1, $event)"></q-input>
         <q-btn v-if="showVideoPlayer" class="q-ml-sm" round outline dense @click="$emit('playerTimestamp', range.max)">
-          <q-icon><i-mdi-skip-forward /></q-icon>
+          <q-icon size="18px"><i-mdi-skip-forward /></q-icon>
         </q-btn>
       </div>
-      <q-btn class="q-ml-auto" @click="$emit('deleteSegment', idx)" color="negative" round outline dense>
-        <q-icon>
-          <i-mdi-trash-can />
-        </q-icon>
-      </q-btn>
+      <div class="q-ml-auto">
+        <q-btn class="q-mx-sm" @click="saveSegmentClipboard" round outline dense>
+          <q-icon size="18px">
+            <i-mdi-content-copy />
+          </q-icon>
+        </q-btn>
+
+        <q-btn @click="$emit('deleteSegment', idx)" color="negative" round outline dense>
+          <q-icon size="18px">
+            <i-mdi-trash-can />
+          </q-icon>
+        </q-btn>
+      </div>
     </div>
 
     <q-range ref="sliderRef" :min="0" :step="0.1" :max="runtimeSeconds" v-model="range"
@@ -48,11 +56,19 @@ import { useAppStore } from 'stores/app';
 import { computed, shallowRef } from 'vue';
 import { storeToRefs } from 'pinia';
 import { watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useSessionStore } from 'src/stores/session';
+import { useQuasar } from 'quasar'
+
 
 const { getColorByType, getTimefromSeconds, ticksToMs, stringToNumber, numberToNumber } = useUtils()
+const { saveSegmentToClipboard } = useSessionStore()
+const { notify } = useQuasar()
+
 
 const appStore = useAppStore()
 const { showVideoPlayer } = storeToRefs(appStore)
+const { t } = useI18n()
 
 interface Props {
   idx: number,
@@ -106,4 +122,8 @@ const update = (ind: any, event: any) => {
   emit('update:modelValue', { start, end, id: props.segment.Id })
 }
 
+const saveSegmentClipboard = () => {
+  saveSegmentToClipboard(props.segment)
+  notify({ message: t('editor.segmentCopiedToClipboard') })
+}
 </script>

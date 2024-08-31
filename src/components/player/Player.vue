@@ -108,6 +108,18 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="q-ml-auto">
+      <q-btn v-if="showEdlBtn()" class="q-mx-sm" @click="writeEdl" round outline dense>
+        edl
+      </q-btn>
+      <q-btn class="q-mx-sm" @click="copyFromSegmentClipboard" round outline dense>
+        <q-icon>
+          <i-mdi-content-paste />
+        </q-icon>
+      </q-btn>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -120,11 +132,22 @@ import { nextTick, ref, watch, onBeforeUnmount, computed } from 'vue';
 import { useMediaCapabilities } from 'src/composables/mediaCapabilities';
 import { useMediaControls, computedAsync, whenever, useMagicKeys, useThrottleFn, onKeyStroke } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
+import { usePluginEdlApi } from 'src/composables/pluginEdlApi'
+import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import { useSessionStore } from 'src/stores/session';
+import { usePluginStore } from 'src/stores/plugin';
 
+
+const { createEdlById } = usePluginEdlApi()
+const { showEdlBtn } = usePluginStore()
 const { getItemImageUrl, getTimefromSeconds, numberToNumber } = useUtils()
 const { getVideoStream } = useVideoApi()
 const { testMediaStream, getMediaContainer, toJellyfinContainer } = useMediaCapabilities()
 const appStore = useAppStore()
+const { getFromSegmentClipboard } = useSessionStore()
+const { notify } = useQuasar()
+const { t } = useI18n()
 const { showVideoPlayer } = storeToRefs(appStore)
 
 interface Props {
@@ -312,6 +335,21 @@ function onHlsEror(_event: typeof Hls.Events.ERROR, data: ErrorData): void {
   }
 }
 
+const writeEdl = () => {
+  createEdlById([props.item.Id])
+  notify({ message: t('plugin.edl.created') })
+}
+
+const copyFromSegmentClipboard = () => {
+  let seg = getFromSegmentClipboard()
+  if (seg) {
+    // update itemID and id
+    seg.ItemId = props.item.Id
+    emit('createSegment', { start: seg.StartTicks, end: seg.EndTicks, type: seg.Type })
+  } else {
+    notify({ message: t('editor.noSegmentInClipboard'), type: 'negative' })
+  }
+}
 
 watch(mediaElementRef, async () => {
   await nextTick();

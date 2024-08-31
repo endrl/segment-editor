@@ -38,6 +38,7 @@ editor:
   slider:
     title: Slider Editor
   noSegments: No Segments available, create one with '+'
+  segmentCopiedToClipboard: Segment copied to clipboard
 'yes': 'Yes'
 'no': 'No'
 segment:
@@ -50,3 +51,7 @@ validation:
   StartEnd: Start is always before End
 close: Close
 back: Back
+plugin:
+  edl:
+    enable: EDL support
+    created: Edl file created

@@ -38,8 +38,10 @@ editor:
   slider:
     title: Éditeur de Slider
   noSegments: Aucun segment disponible, créez-en un avec '+'
-'yes': 'Oui'
-'no': 'Non'
+  noSegmentInClipboard: Clipboard has no segment to copy
+  segmentCopiedToClipboard: Segment copié dans le presse-papiers
+'yes': Oui
+'no': Non
 segment:
   start: Début
   end: Fin
@@ -50,3 +52,6 @@ validation:
   StartEnd: Le début est toujours avant la fin
 close: Fermé
 back: Retour
+plugin:
+  edl:
+    enable: EDL Soutien

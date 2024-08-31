@@ -6,11 +6,12 @@ import { useLocales } from 'src/composables/locales'
 
 export const useAppStore = defineStore('app', () => {
   const $q = useQuasar()
-  const {handleLocaleChange, SUPPORTED_LOCALES} = useLocales()
+  const { handleLocaleChange, SUPPORTED_LOCALES } = useLocales()
 
   const selectedLocale = ref('auto')
   const themeIndex = ref(1)
   const showVideoPlayer = ref(true)
+  const enableEdl = ref(true)
 
   const setTheme = () => {
     if (!themeIndex.value) {
@@ -30,5 +31,5 @@ export const useAppStore = defineStore('app', () => {
   // watch user lang changes
   watch(selectedLocale, setLocale)
 
-  return { selectedLang: selectedLocale, themeIndex, showVideoPlayer, setTheme, setLocale, SUPPORTED_LOCALES }
+  return { selectedLang: selectedLocale, themeIndex, showVideoPlayer, enableEdl, setTheme, setLocale, SUPPORTED_LOCALES }
 })

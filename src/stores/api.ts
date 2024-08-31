@@ -6,8 +6,6 @@ export const useApiStore = defineStore('api', () => {
   const serverAddress = ref('http://localhost:8096')
   const validConnection = ref(false)
   const validAuth = ref(false)
-  const pluginSegmentsApiInstalled = ref(false)
-  const pluginSegmentsApiVersion = ref('0.0.0')
 
   let pluginAuthHeader: HeadersInit | undefined = undefined
 
@@ -22,7 +20,6 @@ export const useApiStore = defineStore('api', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     pluginAuthHeader = { 'MediaBrowser Token': ApiClient.accessToken() }
-
   }
 
   const fetchWithAuth = async (endpoint: string, query?: Map<string, string>) => {
@@ -58,9 +55,12 @@ export const useApiStore = defineStore('api', () => {
    * @param body the body to post
    * @param query the query
    */
-  const postJson = async (endpoint: string, body: string | any, query?: Map<string, string>) => {
+  const postJson = async (endpoint: string, body?: string | any, query?: Map<string, string>) => {
     let headers: HeadersInit = {
       'Content-Type': 'application/json'
+    }
+    if (body) {
+      body = JSON.stringify(body)
     }
 
     if (pluginAuthHeader) {
@@ -70,7 +70,7 @@ export const useApiStore = defineStore('api', () => {
     const reqInit: RequestInit = {
       method: 'POST',
       headers: headers,
-      body: JSON.stringify(body),
+      body: body,
     };
     const response = await fetch(buildUrl(endpoint, query), reqInit);
 
@@ -85,8 +85,12 @@ export const useApiStore = defineStore('api', () => {
       return
     }
 
-    validConnection.value = response.ok
-    const jsonData = await response.json();
+    let jsonData
+    try {
+      jsonData = await response.json();
+    } catch (error) {
+
+    }
     return jsonData;
   }
 
@@ -131,25 +135,6 @@ export const useApiStore = defineStore('api', () => {
     return response.ok && validAuth.value
   }
 
-  // Test for the installed MediaSegments API Plugin
-  const testServerPluginSegmentsApi = async () => {
-    let response;
-    try {
-      response = await fetchWithAuthJson('MediaSegmentsApi');
-
-    } catch (error) {
-      console.error('testPluginSegmentsApi Error', error)
-      return false
-    }
-    if (response && response.version) {
-      pluginSegmentsApiInstalled.value = true
-      pluginSegmentsApiVersion.value = response.version
-      return
-    }
-    pluginSegmentsApiInstalled.value = false
-    pluginSegmentsApiVersion.value = '0.0.0'
-  }
-
   const fetchWithAuthJson = async (endpoint: string, query?: Map<string, string>) => {
     const response = await fetchWithAuth(endpoint, query);
     // filter for broken access
@@ -166,5 +151,5 @@ export const useApiStore = defineStore('api', () => {
     return jsonData;
   }
 
-  return { apiKey, serverAddress, validConnection, validAuth, pluginSegmentsApiInstalled, pluginSegmentsApiVersion, fetchWithAuthJson, fetchWithAuth, testConnection, postJson, deleteJson, buildUrl, testServerPluginSegmentsApi }
+  return { apiKey, serverAddress, validConnection, validAuth, fetchWithAuthJson, fetchWithAuth, testConnection, postJson, deleteJson, buildUrl }
 })

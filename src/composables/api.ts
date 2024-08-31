@@ -1,6 +1,5 @@
 import { useApiStore } from 'stores/api'
 
-import * as fetch from './fetch'
 import { ImageType, VirtualFolderDto } from 'src/interfaces';
 
 export function useApi() {

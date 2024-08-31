@@ -1,27 +1,37 @@
 <template>
   <div class="q-mb-md">
     <div class="row">
-      <q-chip clickable @click="$router.push(`/player/${item.Id}`)" class="q-mb-sm q-mr-sm" outline>
-        <q-icon>
-          <i-mdi-filmstrip />
-        </q-icon>
-      </q-chip>
+      <div>
+        <q-chip clickable @click="$router.push(`/player/${item.Id}`)" class="q-mb-sm q-mr-sm" outline>
+          <q-icon>
+            <i-mdi-filmstrip />
+          </q-icon>
+        </q-chip>
 
-      <q-chip clickable @click="showDialogWith(segment)" class="q-mb-sm q-mr-sm" :color="getColorByType(segment.Type)"
-        v-for="segment in getCurrentSegments" :key="segment.Id + '_chip'">
-        {{ segment.Type }}: {{ getReadableTimeFromSeconds(Math.round(segment.EndTicks - segment.StartTicks)) }}
-      </q-chip>
+        <q-chip clickable @click="showDialogWith(segment)" class="q-mb-sm q-mr-sm" :color="getColorByType(segment.Type)"
+          v-for="segment in getCurrentSegments" :key="segment.Id + '_chip'">
+          {{ segment.Type }}: {{ getReadableTimeFromSeconds(Math.round(segment.EndTicks - segment.StartTicks)) }}
+        </q-chip>
 
-      <SegmentAdd :itemId="item.Id" @saveSegment="saveNewSegment" />
-      <SegmentEdit :item="item" v-model="dialog" :segment="dialogSegment" @saveSegment="saveUpdatedSegmentLocal"
-        @deleteSegment="deleteSegmentLocal" />
-
-      <q-chip clickable outline v-if="getCurrentSegments.length" @click="openConfirmDialog" color="negative"
-        class="q-ml-auto">
-        <q-icon>
-          <i-mdi-trash-can />
-        </q-icon>
-      </q-chip>
+        <SegmentAdd :itemId="item.Id" @saveSegment="saveNewSegment" />
+        <SegmentEdit :item="item" v-model="dialog" :segment="dialogSegment" @saveSegment="saveUpdatedSegmentLocal"
+          @deleteSegment="deleteSegmentLocal" />
+      </div>
+      <div class="q-ml-auto">
+        <q-chip v-if="pluginStore.showEdlBtn()" clickable outline @click="writeEdl">
+          edl
+        </q-chip>
+        <q-chip clickable outline @click="copyFromSegmentClipboard">
+          <q-icon>
+            <i-mdi-content-paste />
+          </q-icon>
+        </q-chip>
+        <q-chip clickable outline v-if="getCurrentSegments.length" @click="openConfirmDialog" color="negative">
+          <q-icon>
+            <i-mdi-trash-can />
+          </q-icon>
+        </q-chip>
+      </div>
     </div>
     <div ref="bar" class="segment-bar full-width relative-position segment-bar-color">
       <SegmentVisual v-for="segment in getCurrentSegments" :key="segment.Id" :segment="segment"
@@ -40,20 +50,24 @@ interface Props {
 <script setup lang="ts">
 import { ItemDto, MediaSegment } from 'src/interfaces';
 import { computed, ref } from 'vue';
-import { noop, useResizeObserver } from '@vueuse/core'
-import { useDebounceFn } from '@vueuse/core'
+import { noop, useResizeObserver, useDebounceFn } from '@vueuse/core'
 import { useUtils } from 'src/composables/utils';
 import { useSegmentsStore } from 'stores/segments';
+import { usePluginStore } from 'stores/plugin';
+import { useSessionStore } from 'stores/session';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar'
+import { usePluginEdlApi } from 'src/composables/pluginEdlApi';
 
-const { getColorByType, getReadableTimeFromSeconds, sortSegmentsStart } = useUtils()
+const { getColorByType, getReadableTimeFromSeconds, sortSegmentsStart, generateUUID } = useUtils()
 const { t } = useI18n()
 const $q = useQuasar()
+const { createEdlById } = usePluginEdlApi()
 
-
+const pluginStore = usePluginStore()
 const segmentsStore = useSegmentsStore()
+const { getFromSegmentClipboard } = useSessionStore()
 const { saveUpdatedSegment, saveNewSegment, deleteSegment, deleteSegments } = segmentsStore
 const { localSegments } = storeToRefs(segmentsStore)
 
@@ -112,6 +126,23 @@ const openConfirmDialog = () => {
   }).onOk(() => {
     deleteSegments(props.item.Id)
   })
+}
+
+const copyFromSegmentClipboard = () => {
+  let seg = getFromSegmentClipboard()
+  if (seg) {
+    // update itemID and id
+    seg.Id = generateUUID()
+    seg.ItemId = props.item.Id
+    saveNewSegment(seg)
+  } else {
+    $q.notify({ message: t('editor.noSegmentInClipboard'), type: 'negative' })
+  }
+}
+
+const writeEdl = () => {
+  createEdlById([props.item.Id])
+  $q.notify({ message: t('plugin.edl.created') })
 }
 </script>
 
