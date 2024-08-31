@@ -27,7 +27,7 @@ Manage Jellyfin Media Segment positions the simple way. This tool is in early st
 * List all versions of a movie
 * [X] Player view
 * Server side search query
-* Copy/Paste segments
+* [X] Copy/Paste segments
 * Add audio support
 * More filter
 
