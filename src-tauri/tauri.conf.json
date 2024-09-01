@@ -48,20 +48,11 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 800,
+        "height": 900,
         "resizable": true,
-        "title": "Jellyfin Segment Editor",
-        "width": 1200,
-        "visible": false
-      },
-      {
-        "width": 400,
-        "height": 400,
-        "decorations": false,
         "center": true,
-        "url": "splashscreen.html",
-        "label": "splashscreen",
-        "visible": false
+        "title": "Jellyfin Segment Editor",
+        "width": 1200
       }
     ],
     "security": {
