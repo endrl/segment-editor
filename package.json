@@ -1,6 +1,6 @@
 {
   "name": "jellyfin-segment-editor",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Manage Jellyfin Media Segments",
   "productName": "Jellyfin Segment Editor",
   "author": "endrl <119058008+endrl@users.noreply.github.com>",
