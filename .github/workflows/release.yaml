@@ -6,9 +6,27 @@ on:
   workflow_dispatch:
 
 jobs:
+  generate-changelog:
+    name: Generate changelog
+    runs-on: ubuntu-22.04
+    outputs:
+      release_body: ${{ steps.git-cliff.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@main
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --latest --no-exec --github-repo ${{ github.repository }}
+
   publish-tauri:
     permissions:
       contents: write
+    needs: generate-changelog
     strategy:
       fail-fast: false
       matrix:
@@ -52,7 +70,7 @@ jobs:
         with:
           tagName: ${{ github.ref_name }} # the action automatically replaces \_\_VERSION\_\_ with the app version.
           releaseName: 'Jellyfin Segment Editor __VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseBody: ${{ needs.generate-changelog.outputs.release_body }}
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}

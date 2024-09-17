@@ -88,3 +88,11 @@ npm run tauri dev
 ```bash
 npm run tauri build
 ```
+
+## Additional Tooling
+
+* Changelog Management [git-cliff](https://github.com/orhun/git-cliff)
+  * See the next version bump `git cliff --bumped-version`
+  * Set the version in package.json
+  * Create Changelog `git cliff --bump --output CHANGELOG.md`
+  * Create and push the tag with version `git tag -a 1.4.0 -m "release 1.4"` and `git push origin tag 1.4.0`
