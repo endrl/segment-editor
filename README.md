@@ -2,34 +2,32 @@
 
 Manage Jellyfin Media Segment positions the simple way. This tool is in early stages of development.
 
-* Create/Edit/Delete all kind of Segments (Intro, Outro, ...)
-* Player to copy timestamps while you watch
+- Create/Edit/Delete all kind of Segments (Intro, Outro, ...)
+- Player to copy timestamps while you watch
 
 ## Requirements
 
-* ⚠️ Jellyfin 10.10 unstable
-* Jellyfin Plugin [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
-* Jellyfin Server API Key (created by you)
+- Jellyfin 10.10
+- Jellyfin Plugin [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
+- Jellyfin Server API Key (created by you)
 
 ## Installation
 
-* Download for your platform from [Releases](https://github.com/endrl/segment-editor/releases/latest)
+- Download for your platform from [Releases](https://github.com/endrl/segment-editor/releases/latest)
 
 ## Related projects
 
-* Jellyfin Plugin: [Media Analyzer](https://github.com/endrl/jellyfin-plugin-media-analyzer)
-* Jellyfin Plugin: [.EDL Creator](https://github.com/endrl/jellyfin-plugin-edl)
-* Jellyfin Plugin: [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
-* Player: [Jellyfin Vue Fork](https://github.com/endrl/jellyfin-vue)
+- Jellyfin Plugin: [.EDL Creator](https://github.com/endrl/jellyfin-plugin-edl)
+- Jellyfin Plugin: [MediaSegments API](https://github.com/endrl/jellyfin-plugin-ms-api)
 
 ## Work in progress
 
-* List all versions of a movie
-* [X] Player view
-* Server side search query
-* [X] Copy/Paste segments
-* Add audio support
-* More filter
+- List all versions of a movie
+- [x] Player view
+- Server side search query
+- [x] Copy/Paste segments
+- Add audio support
+- More filter
 
 ## Pictures
 
@@ -91,8 +89,8 @@ npm run tauri build
 
 ## Additional Tooling
 
-* Changelog Management [git-cliff](https://github.com/orhun/git-cliff)
-  * See the next version bump `git cliff --bumped-version`
-  * Set the version in package.json
-  * Create Changelog `git cliff --bump --output CHANGELOG.md`
-  * Create and push the tag with version `git tag -a 1.4.0 -m "release 1.4"` and `git push origin tag 1.4.0`
+- Changelog Management [git-cliff](https://github.com/orhun/git-cliff)
+  - See the next version bump `git cliff --bumped-version`
+  - Set the version in package.json
+  - Create Changelog `git cliff --bump --output CHANGELOG.md`
+  - Create and push the tag with version `git tag -a 1.4.0 -m "release 1.4"` and `git push origin tag 1.4.0`
