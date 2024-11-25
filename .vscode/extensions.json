@@ -4,7 +4,9 @@
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
     "vue.volar",
-    "wayou.vscode-todo-highlight"
+    "wayou.vscode-todo-highlight",
+    "lokalise.i18n-ally",
+    "pflannery.vscode-versionlens"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

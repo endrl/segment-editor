@@ -1,0 +1,31 @@
+{
+    "name": "Jellyfin SegmentEditor",
+    "dockerComposeFile": "compose.yaml",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "service": "app",
+    "features": {
+        "rust": {
+            "version": "latest",
+            "profile": "default"
+        }
+    },
+    "postCreateCommand": {
+        "npm": "npm i && npm i -g @quasar/cli"
+    },
+    "forwardPorts": [
+        3111
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "editorconfig.editorconfig",
+                "vue.volar",
+                "wayou.vscode-todo-highlight",
+                "lokalise.i18n-ally",
+                "pflannery.vscode-versionlens"
+            ]
+        }
+    }
+}
