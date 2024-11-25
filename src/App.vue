@@ -12,7 +12,7 @@ import { useTauri } from 'src/composables/tauri';
 const { setTheme, setLocale } = useAppStore();
 const { testConnection } = useApiStore();
 const { testServerPlugins } = usePluginStore();
-const { hide_splashscreen } = useTauri();
+const { show_main_window } = useTauri();
 
 
 // apply theme
@@ -21,8 +21,8 @@ setTheme();
 // apply locale
 setLocale();
 
-// close splash after load
-hide_splashscreen()
+// show main window
+show_main_window()
 
 // Test connection async
 console.log('Testing connection state')

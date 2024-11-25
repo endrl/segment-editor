@@ -50,12 +50,14 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "height": 900,
         "resizable": true,
         "center": true,
         "title": "Jellyfin Segment Editor",
-        "width": 1200
+        "width": 1200,
+        "visible": false
       }
     ],
     "security": {

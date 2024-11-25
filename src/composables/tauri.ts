@@ -3,14 +3,14 @@ export function useTauri() {
   /**
    * Hide Tauri splashscreen
    */
-  const hide_splashscreen = async () => {
-    if ('__TAURI__' in window) {
+  const show_main_window = async () => {
+    if (window.isTauri) {
       const { invoke } = await import('@tauri-apps/api/core')
-      invoke('close_splashscreen')
+      invoke('show_main_window')
     }
   }
 
-  return { hide_splashscreen }
+  return { show_main_window }
 }
 
 
