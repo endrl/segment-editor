@@ -32,6 +32,7 @@ export function useApi() {
     const query: Map<string, any> = new Map();
     query.set('parentId', collectionId);
     query.set('fields', 'MediaStreams')
+    query.set('sortBy','AiredEpisodeOrder,SortName')
     if (index != undefined) {
       // TODO all broken?!?!
       //query.set('startIndex', index)
